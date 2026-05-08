@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clear Cache and Restart</title>
+</head>
+<body>
+    <h1>Force Clear All Cache</h1>
+    <p>Click the button below to clear all cache and restart fresh:</p>
+    
+    <button onclick="clearEverything()" style="padding: 10px 20px; font-size: 16px; background: #ef4444; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        🧹 Clear Everything & Restart
+    </button>
+    
+    <div id="status" style="margin-top: 20px;"></div>
+    
+    <script>
+        function clearEverything() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<h3>Clearing cache...</h3>';
+            
+            // Clear localStorage
+            localStorage.clear();
+            status.innerHTML += '<p>✅ localStorage cleared</p>';
+            
+            // Clear sessionStorage
+            sessionStorage.clear();
+            status.innerHTML += '<p>✅ sessionStorage cleared</p>';
+            
+            // Clear IndexedDB
+            if ('indexedDB' in window) {
+                indexedDB.databases().then(databases => {
+                    databases.forEach(db => {
+                        indexedDB.deleteDatabase(db.name);
+                    });
+                    status.innerHTML += '<p>✅ IndexedDB cleared</p>';
+                });
+            }
+            
+            // Clear service worker cache
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    registrations.forEach(registration => {
+                        registration.unregister();
+                    });
+                    status.innerHTML += '<p>✅ Service workers cleared</p>';
+                });
+            }
+            
+            // Clear cache storage
+            if ('caches' in window) {
+                caches.keys().then(names => {
+                    names.forEach(name => {
+                        caches.delete(name);
+                    });
+                    status.innerHTML += '<p>✅ Cache storage cleared</p>';
+                });
+            }
+            
+            status.innerHTML += '<h3 style="color: green;">🎉 All cache cleared!</h3>';
+            status.innerHTML += '<p>Redirecting to homepage in 2 seconds...</p>';
+            
+            setTimeout(() => {
+                window.location.href = 'http://localhost:3000';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

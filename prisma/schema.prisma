@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(cuid())
+  email     String     @unique
+  quizzes   Quiz[]
+  feedback  Feedback[]
+  createdAt DateTime   @default(now())
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  answers   String   // JSON string of QuizAnswer[]
+  completed Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Recommendation {
+  id        String   @id @default(cuid())
+  quizId    String
+  items     String   // JSON string of top-N catalog subset with scores
+  createdAt DateTime @default(now())
+}
+
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  action    String   // "like" | "pass"
+  score     Int?
+  createdAt DateTime @default(now())
+}
