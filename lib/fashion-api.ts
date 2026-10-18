@@ -56,6 +56,32 @@ export interface UserStats {
   feedback_history: unknown[]
 }
 
+export interface OutfitProduct {
+  id: string
+  title: string
+  brand: string
+  category: string
+  price: number
+  image_url: string
+}
+
+export interface OutfitItem {
+  slot: string
+  product: OutfitProduct
+  compatibility_score: number
+  signals: Record<string, number>
+  reasons: string[]
+}
+
+export interface OutfitResponse {
+  anchor: OutfitProduct
+  items: OutfitItem[]
+  outfit_score: number
+  total_price: number
+  complete: boolean
+  latency_ms: number
+}
+
 // API Configuration
 const FASHION_API_BASE_URL = process.env.NEXT_PUBLIC_FASHION_API_URL ?? 'http://localhost:8004'
 
@@ -237,6 +263,12 @@ export async function getRecommendationsFromUploadedImage(
     method: 'POST',
     body: form,
   })
+}
+
+/** Build a compatibility-ranked outfit around a catalog product. */
+export async function getOutfit(itemId: string, maxTotal?: number): Promise<OutfitResponse> {
+  const query = maxTotal ? `?max_total=${encodeURIComponent(maxTotal)}` : ''
+  return apiRequest<OutfitResponse>(`/outfits/${encodeURIComponent(itemId)}${query}`)
 }
 
 /**

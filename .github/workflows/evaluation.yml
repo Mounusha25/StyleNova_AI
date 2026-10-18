@@ -24,12 +24,15 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Run recommendation quality gate
         run: python -m evals.run --fail-under-ndcg 0.80
+      - name: Run outfit composition quality gate
+        run: python -m evals.outfits --fail-under-complete 0.95 --fail-under-validity 1.0
       - name: Upload benchmark report
         uses: actions/upload-artifact@v4
         with:
           name: recommendation-evaluation
           path: |
             evals/results/latest.json
+            evals/results/outfits.json
             catalog_quality/reports/catalog_quality.json
 
   frontend-quality:

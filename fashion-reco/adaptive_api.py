@@ -27,6 +27,7 @@ sys.path.append(str(project_root))
 
 from adaptive_recommender import AdaptiveFashionRecommender
 from image_validation import MAX_IMAGE_BYTES, ImageValidationError, decode_uploaded_image
+from outfit_composer import OutfitComposer
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -36,7 +37,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Adaptive Fashion Recommender API",
     description="Fashion recommendations with like/dislike feedback and adaptive learning",
-    version="4.1.0",
+    version="4.2.0",
 )
 
 # Add CORS middleware
@@ -55,6 +56,7 @@ app.add_middleware(
 
 # Global variables
 adaptive_recommender = None
+outfit_composer = None
 
 
 # Pydantic models for API
@@ -194,7 +196,7 @@ def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
 
 def initialize_system():
     """Initialize the adaptive recommendation system."""
-    global adaptive_recommender
+    global adaptive_recommender, outfit_composer
 
     logger.info("🚀 Initializing Adaptive Fashion Recommender System...")
 
@@ -208,6 +210,17 @@ def initialize_system():
 
         # Build index
         adaptive_recommender.build_catalog_index(catalog_df)
+        if len(adaptive_recommender.catalog_df) == len(catalog_df):
+            outfit_composer = OutfitComposer(
+                adaptive_recommender.catalog_df,
+                adaptive_recommender.catalog_embeddings,
+            )
+        else:
+            logger.warning(
+                "Some catalog images were unavailable; outfit composition will use the "
+                "complete catalog with metadata similarity so all wardrobe slots remain available."
+            )
+            outfit_composer = OutfitComposer(catalog_df)
 
         # Try to load existing user profiles
         adaptive_recommender.load_user_profiles()
@@ -246,6 +259,7 @@ async def root():
             "feedback_storage": "Persistent user feedback history",
             "model": "OpenAI CLIP + Adaptive Learning",
             "image_upload": "Validated JPEG, PNG, and WebP visual search",
+            "outfit_composition": "Compatibility-ranked complete looks",
             "catalog_size": len(adaptive_recommender.catalog_df)
             if adaptive_recommender
             else 0,
@@ -435,6 +449,19 @@ async def priority_adaptive_recommendations_get(
         raise HTTPException(
             status_code=500, detail=f"Priority adaptive recommendation failed: {str(e)}"
         )
+
+
+@app.get("/outfits/{item_id}")
+async def compose_outfit(item_id: str, max_total: Optional[float] = None):
+    """Build a category-valid, compatibility-ranked outfit around one product."""
+    if not outfit_composer:
+        raise HTTPException(status_code=503, detail="System not initialized")
+    if max_total is not None and max_total <= 0:
+        raise HTTPException(status_code=422, detail="max_total must be positive")
+    try:
+        return outfit_composer.compose(item_id, max_total=max_total)
+    except KeyError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
 
 
 @app.post("/feedback")

@@ -1,0 +1,9 @@
+{
+  "benchmark_type": "offline structural outfit-composition audit",
+  "anchors": 100,
+  "complete_outfit_rate": 1.0,
+  "slot_validity_rate": 1.0,
+  "catalog_coverage": 0.38,
+  "mean_outfit_score": 0.6293420000000001,
+  "p50_latency_ms": 5.681
+}

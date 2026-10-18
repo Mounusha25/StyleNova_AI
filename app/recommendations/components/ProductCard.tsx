@@ -4,10 +4,11 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import { Star, Info, ShoppingBag } from 'lucide-react'
+import { Star, Info, ShoppingBag, WandSparkles, Loader2 } from 'lucide-react'
 import { Product } from '@/lib/validators'
 import { ScoredProduct } from '@/lib/scoring'
 import { useState } from 'react'
+import { getOutfit, OutfitResponse } from '@/lib/fashion-api'
 
 interface ProductCardProps {
   product: Product | ScoredProduct
@@ -138,9 +139,24 @@ export function ProductCard({ product }: ProductCardProps) {
 
 function ProductDetails({ product }: { product: Product | ScoredProduct }) {
   const isScored = 'score' in product && 'reason' in product
+  const [outfit, setOutfit] = useState<OutfitResponse | null>(null)
+  const [outfitError, setOutfitError] = useState<string | null>(null)
+  const [isLoadingOutfit, setIsLoadingOutfit] = useState(false)
+
+  const handleCompleteLook = async () => {
+    setIsLoadingOutfit(true)
+    setOutfitError(null)
+    try {
+      setOutfit(await getOutfit(product.id))
+    } catch (error) {
+      setOutfitError(error instanceof Error ? error.message : 'Could not build an outfit.')
+    } finally {
+      setIsLoadingOutfit(false)
+    }
+  }
 
   return (
-    <div className="space-y-6 pt-6">
+    <div className="space-y-6 overflow-y-auto px-4 pb-6">
       {/* Product Image */}
       <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
         <img
@@ -160,6 +176,32 @@ function ProductDetails({ product }: { product: Product | ScoredProduct }) {
 
       {/* Product Info */}
       <div className="space-y-4">
+        <Button className="w-full gap-2" onClick={handleCompleteLook} disabled={isLoadingOutfit}>
+          {isLoadingOutfit ? <Loader2 className="h-4 w-4 animate-spin" /> : <WandSparkles className="h-4 w-4" />}
+          {isLoadingOutfit ? 'Building your outfit…' : 'Complete the look'}
+        </Button>
+        {outfitError && <p role="alert" className="text-sm text-red-600">{outfitError}</p>}
+        {outfit && (
+          <div className="space-y-3 rounded-lg bg-purple-50 p-3">
+            <div className="flex items-center justify-between">
+              <p className="font-semibold text-purple-900">Complete outfit</p>
+              <Badge>{Math.round(outfit.outfit_score * 100)}% compatible</Badge>
+            </div>
+            {outfit.items.map((item) => (
+              <div key={`${item.slot}-${item.product.id}`} className="flex gap-3 rounded-md bg-white p-2">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={item.product.image_url} alt="" className="h-16 w-12 rounded object-cover" />
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-medium uppercase text-purple-600">{item.slot}</p>
+                  <p className="truncate text-sm font-medium">{item.product.title}</p>
+                  <p className="text-xs text-gray-500">{item.product.brand} · ${item.product.price}</p>
+                  <p className="mt-1 text-xs text-gray-500">{item.reasons[0]}</p>
+                </div>
+              </div>
+            ))}
+            <p className="text-right text-sm font-semibold">Total: ${outfit.total_price.toFixed(2)}</p>
+          </div>
+        )}
         <div>
           <h4 className="font-semibold text-gray-900 mb-1">Brand</h4>
           <p className="text-gray-600">{product.brand}</p>

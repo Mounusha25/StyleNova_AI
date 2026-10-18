@@ -259,6 +259,20 @@ The full machine-readable report is written to `evals/results/latest.json`. Thes
 **offline results on a small, curated catalog benchmark**; they are not production traffic,
 A/B-test, conversion, or real-user engagement metrics.
 
+### Outfit composition audit
+
+The compatibility-aware composer builds a three-slot look around every catalog item. Category
+rules prevent invalid combinations, while metadata/CLIP cohesion, price tier, color harmony, and
+brand variety rank candidates. Run its full-catalog structural quality gate with:
+
+```bash
+python -m evals.outfits --fail-under-complete 0.95 --fail-under-validity 1.0
+```
+
+The report in `evals/results/outfits.json` measures completion, slot validity, catalog coverage,
+mean compatibility score, and latency. This is a structural offline audit—not human stylist labels
+or evidence of real-user preference.
+
 ---
 
 ## Tech Stack
@@ -423,7 +437,7 @@ stylenova-ai/
 - [ ] **Fashion-specific fine-tuned CLIP** — domain adaptation on FashionGen / DeepFashion datasets
 - [x] **Image upload query** — validates JPEG/PNG/WebP uploads (5 MB limit), encodes the photo with CLIP, and applies feedback-aware reranking through `POST /recommend/image-upload`
 - [ ] **Seasonal & contextual signals** — weather API for occasion-aware recommendations
-- [ ] **Outfit completion** — multi-item combinatorial recommendation with pairwise compatibility scoring
+- [x] **Outfit completion** — category-valid multi-item looks ranked by semantic, price, color, and brand compatibility
 - [ ] **GPU model serving** — TorchServe / Triton Inference Server for production throughput
 - [ ] **A/B testing framework** — compare recommendation strategies across user cohorts
 - [x] **Offline evaluation** — versioned Precision@10, Recall@10, NDCG@10, diversity, coverage, and latency benchmark
