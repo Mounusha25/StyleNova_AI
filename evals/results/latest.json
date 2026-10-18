@@ -12,7 +12,7 @@
       "ndcg_at_10": 0.0828403305958317,
       "intra_list_diversity": 0.9547374847374848,
       "catalog_coverage": 0.1,
-      "p50_latency_ms": 0.00014549914340022951,
+      "p50_latency_ms": 0.00014550096238963306,
       "details": [
         {
           "case_id": "denim",
@@ -20,7 +20,7 @@
           "recall_at_10": 0.2,
           "ndcg_at_10": 0.09803928583135704,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.0006249974831007421,
+          "latency_ms": 0.0005000001692678779,
           "ranked_product_ids": [
             "470",
             "575",
@@ -40,7 +40,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.0005830006557516754,
+          "latency_ms": 0.0005000001692678779,
           "ranked_product_ids": [
             "470",
             "575",
@@ -60,7 +60,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.00029099828680045903,
+          "latency_ms": 0.0002499982656445354,
           "ranked_product_ids": [
             "470",
             "575",
@@ -80,7 +80,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.0002079978003166616,
+          "latency_ms": 0.00016600097296759486,
           "ranked_product_ids": [
             "470",
             "575",
@@ -100,7 +100,7 @@
           "recall_at_10": 0.3333333333333333,
           "ndcg_at_10": 0.46927872602275644,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.00012499731383286417,
+          "latency_ms": 8.300048648379743e-05,
           "ranked_product_ids": [
             "470",
             "575",
@@ -140,7 +140,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.00012499731383286417,
+          "latency_ms": 0.00012500095181167126,
           "ranked_product_ids": [
             "470",
             "575",
@@ -180,7 +180,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.00016599733498878777,
+          "latency_ms": 8.300048648379743e-05,
           "ranked_product_ids": [
             "470",
             "575",
@@ -200,7 +200,7 @@
           "recall_at_10": 0.0,
           "ndcg_at_10": 0.0,
           "diversity": 0.9547374847374847,
-          "latency_ms": 0.00012500095181167126,
+          "latency_ms": 0.00016600097296759486,
           "ranked_product_ids": [
             "470",
             "575",
@@ -225,7 +225,7 @@
       "ndcg_at_10": 0.9157555591899629,
       "intra_list_diversity": 0.8984987320709715,
       "catalog_coverage": 0.58,
-      "p50_latency_ms": 0.1319994989898987,
+      "p50_latency_ms": 0.130062499010819,
       "details": [
         {
           "case_id": "denim",
@@ -233,7 +233,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9416939541939543,
-          "latency_ms": 0.18958399959956296,
+          "latency_ms": 0.20612499793060124,
           "ranked_product_ids": [
             "3241",
             "1622",
@@ -253,7 +253,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9259440559440559,
-          "latency_ms": 0.1560829987283796,
+          "latency_ms": 0.15466699915123172,
           "ranked_product_ids": [
             "3217",
             "3528",
@@ -273,7 +273,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.8243938468938469,
-          "latency_ms": 0.1325410012213979,
+          "latency_ms": 0.12924999828101136,
           "ranked_product_ids": [
             "5714",
             "5474",
@@ -293,7 +293,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9297321197321198,
-          "latency_ms": 0.13329200010048226,
+          "latency_ms": 0.1320000010309741,
           "ranked_product_ids": [
             "6853",
             "6696",
@@ -313,7 +313,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9425389448299666,
-          "latency_ms": 0.13145799675839953,
+          "latency_ms": 0.12274999971850775,
           "ranked_product_ids": [
             "470",
             "3285",
@@ -333,7 +333,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9250919450919451,
-          "latency_ms": 0.11987499965471216,
+          "latency_ms": 0.13087499974062666,
           "ranked_product_ids": [
             "3029",
             "2209",
@@ -353,7 +353,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 0.8738100898801322,
           "diversity": 0.9058318841652176,
-          "latency_ms": 0.12879200221505016,
+          "latency_ms": 0.12679200153797865,
           "ranked_product_ids": [
             "7434",
             "7145",
@@ -373,7 +373,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 0.8385465274895063,
           "diversity": 0.9398703366350426,
-          "latency_ms": 0.12191600035293959,
+          "latency_ms": 0.12679199789999984,
           "ranked_product_ids": [
             "3713",
             "1622",
@@ -393,7 +393,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9593665593665595,
-          "latency_ms": 0.12812500062864274,
+          "latency_ms": 0.12845799938077107,
           "ranked_product_ids": [
             "4826",
             "4799",
@@ -413,7 +413,7 @@
           "recall_at_10": 0.5,
           "ndcg_at_10": 0.44519897452998813,
           "diversity": 0.6905236738570072,
-          "latency_ms": 0.13420799950836226,
+          "latency_ms": 0.13095800022711046,
           "ranked_product_ids": [
             "5298",
             "6651",
@@ -438,7 +438,7 @@
       "ndcg_at_10": 0.9843204249766015,
       "intra_list_diversity": 0.8636004567328097,
       "catalog_coverage": 0.69,
-      "p50_latency_ms": 0.14377050138136838,
+      "p50_latency_ms": 0.1472710009693401,
       "details": [
         {
           "case_id": "denim",
@@ -446,7 +446,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9416939541939543,
-          "latency_ms": 0.1382080008625053,
+          "latency_ms": 0.15070900190039538,
           "ranked_product_ids": [
             "3241",
             "1622",
@@ -466,7 +466,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9259440559440559,
-          "latency_ms": 0.14537500101141632,
+          "latency_ms": 0.13891599883208983,
           "ranked_product_ids": [
             "3217",
             "3528",
@@ -486,7 +486,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.7836857586857588,
-          "latency_ms": 0.14216600175132044,
+          "latency_ms": 0.15187499957391992,
           "ranked_product_ids": [
             "5714",
             "5474",
@@ -506,7 +506,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.7465380298713632,
-          "latency_ms": 0.14933299826225266,
+          "latency_ms": 0.14816700058872811,
           "ranked_product_ids": [
             "6853",
             "6696",
@@ -526,7 +526,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.8916216136804374,
-          "latency_ms": 0.14108400137047283,
+          "latency_ms": 0.14658299915026873,
           "ranked_product_ids": [
             "470",
             "3285",
@@ -546,7 +546,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.926982646982647,
-          "latency_ms": 0.14729100075783208,
+          "latency_ms": 0.14637500134995207,
           "ranked_product_ids": [
             "3029",
             "2209",
@@ -566,7 +566,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 0.9068250379649666,
           "diversity": 0.8977436760770094,
-          "latency_ms": 0.1475829994888045,
+          "latency_ms": 0.1405000002705492,
           "ranked_product_ids": [
             "7434",
             "7145",
@@ -586,7 +586,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9196553664200723,
-          "latency_ms": 0.13816700084134936,
+          "latency_ms": 0.14837499838904478,
           "ranked_product_ids": [
             "3713",
             "3731",
@@ -606,7 +606,7 @@
           "recall_at_10": 1.0,
           "ndcg_at_10": 1.0,
           "diversity": 0.9631975431975432,
-          "latency_ms": 0.14766700041946024,
+          "latency_ms": 0.13983299868414178,
           "ranked_product_ids": [
             "4826",
             "4799",
@@ -626,7 +626,7 @@
           "recall_at_10": 0.9,
           "ndcg_at_10": 0.9363792118010481,
           "diversity": 0.6389419222752556,
-          "latency_ms": 0.14170899885357358,
+          "latency_ms": 0.14795900278841145,
           "ranked_product_ids": [
             "6651",
             "6853",

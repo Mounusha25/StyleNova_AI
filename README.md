@@ -327,9 +327,15 @@ source fashion_venv/bin/activate        # Windows: fashion_venv\Scripts\activate
 pip install -r requirements.txt
 
 # Start FastAPI with hot reload
-uvicorn adaptive_api:app --reload --port 8000
-# → http://localhost:8000/docs  (auto-generated OpenAPI UI)
+uvicorn adaptive_api:app --reload --port 8004
+# → http://localhost:8004/docs  (auto-generated OpenAPI UI)
 ```
+
+The quiz-completion screen also accepts a local JPEG, PNG, or WebP photo (maximum 5 MB).
+The frontend sends it as multipart form data to `POST /recommend/image-upload`; the service
+validates the file, creates a CLIP image embedding, retrieves similar catalog items, and blends
+the ranking with the user's learned preference vector. Set `NEXT_PUBLIC_FASHION_API_URL` if the
+backend is not running at the default `http://localhost:8004`.
 
 ---
 
@@ -379,7 +385,7 @@ stylenova-ai/
 
 | Decision | Alternatives Considered | Why This Choice |
 |---|---|---|
-| CLIP ViT-B/32 over text-only TF-IDF | ResNet, EfficientNet, pure TF-IDF | Cross-modal: text queries → visual results without image uploads |
+| CLIP ViT-B/32 over text-only TF-IDF | ResNet, EfficientNet, pure TF-IDF | Cross-modal text queries and uploaded-image visual retrieval |
 | EMA over gradient descent updates | SGD on preference vector | No labels needed; works from binary like/pass signals only |
 | Pre-computed in-memory catalog embeddings | On-the-fly CLIP inference for every query | Amortizes catalog encoding across online retrieval requests |
 | ε-greedy over Thompson Sampling | UCB, full Bayesian bandits | Simpler, interpretable, sufficient for session-length horizons |
@@ -415,7 +421,7 @@ stylenova-ai/
 ## What's Next
 
 - [ ] **Fashion-specific fine-tuned CLIP** — domain adaptation on FashionGen / DeepFashion datasets
-- [ ] **Image upload query** — encode user photo via CLIP image encoder, retrieve visually similar items
+- [x] **Image upload query** — validates JPEG/PNG/WebP uploads (5 MB limit), encodes the photo with CLIP, and applies feedback-aware reranking through `POST /recommend/image-upload`
 - [ ] **Seasonal & contextual signals** — weather API for occasion-aware recommendations
 - [ ] **Outfit completion** — multi-item combinatorial recommendation with pairwise compatibility scoring
 - [ ] **GPU model serving** — TorchServe / Triton Inference Server for production throughput

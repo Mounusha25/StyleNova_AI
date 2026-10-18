@@ -7,7 +7,7 @@ An intelligent fashion recommendation system that learns from user feedback usin
 - **🧠 Adaptive Learning**: Like/dislike feedback that improves recommendations
 - **⏰ Temporal Decay**: Negative feedback weakens over time (not permanent)
 - **👤 User Profiles**: Individual preference learning for each user
-- **🔍 Multiple Input Methods**: Quiz features, image URLs, or brand names
+- **🔍 Multiple Input Methods**: Quiz features, image URLs, uploaded images, or brand names
 - **🎯 Real-time Adaptation**: Immediate feedback integration
 - **💾 Persistent Storage**: User preferences saved across sessions
 
@@ -103,6 +103,18 @@ python test_all_methods.py
 }
 ```
 
+### Endpoint: `POST /recommend/image-upload`
+
+Upload a JPEG, PNG, or WebP file up to 5 MB for CLIP visual retrieval and personalized reranking:
+
+```bash
+curl -X POST http://localhost:8004/recommend/image-upload \
+  -F "image=@outfit.jpg" \
+  -F "user_id=user123" \
+  -F "k=10" \
+  -F "adaptation_strength=0.6"
+```
+
 ### Endpoint: `POST /feedback`
 
 **Give Feedback (Like/Dislike)**
@@ -140,7 +152,8 @@ python manual_test.py
 - `adaptive_api.py` - Main FastAPI server with all endpoints
 - `adaptive_recommender.py` - Core RLHF adaptive learning logic
 - `clip_recommender.py` - CLIP-based semantic recommendations
-- `catalog.csv` - Product catalog (5 sample items)
+- `catalog.csv` - Raw 100-item product catalog
+- `catalog_clean.csv` - Quality-checked runtime catalog
 - `user_profiles.json` - Persistent user learning data
 
 ### Key Features
@@ -149,15 +162,6 @@ python manual_test.py
 - **Temporal Decay**: `penalty = -0.4 * exp(-0.1 * days)` 
 - **Individual Users**: Separate learning profiles per user
 - **Persistent Storage**: Automatic save/load of user preferences
-
-## 🎯 Valid Item IDs for Testing
-
-Your catalog contains these items:
-- `item_001` - Zara White Cotton T-Shirt ($29.99)
-- `item_002` - H&M Blue Denim Jeans ($49.99)
-- `item_003` - Nike Black Running Shoes ($89.99)
-- `item_004` - Uniqlo Gray Hoodie ($39.99)
-- `item_005` - Adidas Red Track Jacket ($79.99)
 
 ## 🔧 API Documentation
 

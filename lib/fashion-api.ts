@@ -57,7 +57,7 @@ export interface UserStats {
 }
 
 // API Configuration
-const FASHION_API_BASE_URL = 'http://localhost:8004'
+const FASHION_API_BASE_URL = process.env.NEXT_PUBLIC_FASHION_API_URL ?? 'http://localhost:8004'
 
 class FashionAPIError extends Error {
   constructor(message: string, public status?: number, public response?: unknown) {
@@ -71,13 +71,14 @@ class FashionAPIError extends Error {
  */
 async function apiRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${FASHION_API_BASE_URL}${endpoint}`
-  
+  const headers = new Headers(options.headers)
+  if (!(options.body instanceof FormData) && !headers.has('Content-Type')) {
+    headers.set('Content-Type', 'application/json')
+  }
+
   const config: RequestInit = {
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
     ...options,
+    headers,
   }
 
   try {
@@ -214,6 +215,27 @@ export async function getRecommendationsFromImage(
   return apiRequest<RecommendationResponse[]>('/recommend/adaptive', {
     method: 'POST',
     body: JSON.stringify(request),
+  })
+}
+
+/**
+ * Upload a local fashion photo and retrieve CLIP-ranked, personalized products.
+ */
+export async function getRecommendationsFromUploadedImage(
+  userId: string,
+  image: File,
+  adaptationStrength: number = 0.5,
+  count: number = 10
+): Promise<RecommendationResponse[]> {
+  const form = new FormData()
+  form.append('image', image)
+  form.append('user_id', userId)
+  form.append('adaptation_strength', String(adaptationStrength))
+  form.append('k', String(count))
+
+  return apiRequest<RecommendationResponse[]>('/recommend/image-upload', {
+    method: 'POST',
+    body: form,
   })
 }
 

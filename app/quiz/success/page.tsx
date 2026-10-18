@@ -12,6 +12,7 @@ import { generateRecommendations } from '@/lib/scoring'
 import { useRecommendationStore, useUserStore } from '@/lib/store'
 import { fetchRecommendationsForUser, checkFashionAPIHealth } from '@/lib/fashion-api'
 import { ResetButton } from '@/components/ResetButton'
+import { ImageStyleSearch } from '@/components/ImageStyleSearch'
 
 interface QuizData {
   quiz: {
@@ -286,6 +287,8 @@ function QuizSuccessContent() {
             </div>
           </CardContent>
         </Card>
+
+        <ImageStyleSearch userId={userId ?? quizData.quiz.userId} />
 
         {/* Call to Action */}
         <Card className="border-0 shadow-lg">

@@ -14,7 +14,7 @@ Features:
 import sys
 from pathlib import Path
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, List
@@ -26,6 +26,7 @@ project_root = Path(__file__).parent
 sys.path.append(str(project_root))
 
 from adaptive_recommender import AdaptiveFashionRecommender
+from image_validation import MAX_IMAGE_BYTES, ImageValidationError, decode_uploaded_image
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -35,7 +36,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Adaptive Fashion Recommender API",
     description="Fashion recommendations with like/dislike feedback and adaptive learning",
-    version="4.0.0",
+    version="4.1.0",
 )
 
 # Add CORS middleware
@@ -112,6 +113,23 @@ class RecommendationResponse(BaseModel):
     recommendation_type: str
     user_feedback: Optional[dict] = None  # Previous feedback for this item
     is_personalized: bool = False
+
+
+def to_recommendation_response(result: dict) -> RecommendationResponse:
+    """Map an internal ranking result to the public API contract."""
+    return RecommendationResponse(
+        rank=result["rank"],
+        id=result["id"],
+        brand=result["brand"],
+        title=result["title"],
+        price=result["price"],
+        score=result["score"],
+        base_score=result.get("base_score"),
+        image_url=result["image_url"],
+        recommendation_type=result["recommendation_type"],
+        user_feedback=result.get("user_feedback"),
+        is_personalized=result.get("is_personalized", False),
+    )
 
 
 def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
@@ -227,6 +245,7 @@ async def root():
             "user_profiles": "Individual preference learning",
             "feedback_storage": "Persistent user feedback history",
             "model": "OpenAI CLIP + Adaptive Learning",
+            "image_upload": "Validated JPEG, PNG, and WebP visual search",
             "catalog_size": len(adaptive_recommender.catalog_df)
             if adaptive_recommender
             else 0,
@@ -288,22 +307,7 @@ async def adaptive_recommendations(request: AdaptiveSearchRequest):
         logger.info(f"✅ Returning {len(filtered_results)} priority recommendations")
 
         # Convert to response format
-        recommendations = [
-            RecommendationResponse(
-                rank=result["rank"],
-                id=result["id"],
-                brand=result["brand"],
-                title=result["title"],
-                price=result["price"],
-                score=result["score"],
-                base_score=result.get("base_score"),
-                image_url=result["image_url"],
-                recommendation_type=result["recommendation_type"],
-                user_feedback=result.get("user_feedback"),
-                is_personalized=result.get("is_personalized", False),
-            )
-            for result in filtered_results
-        ]
+        recommendations = [to_recommendation_response(result) for result in filtered_results]
 
         logger.info(
             f"✅ Found {len(recommendations)} NEW priority adaptive recommendations for user {request.user_id}"
@@ -315,6 +319,57 @@ async def adaptive_recommendations(request: AdaptiveSearchRequest):
         raise HTTPException(
             status_code=500, detail=f"Priority adaptive recommendation failed: {str(e)}"
         )
+
+
+@app.post("/recommend/image-upload", response_model=List[RecommendationResponse])
+async def image_upload_recommendations(
+    image: UploadFile = File(...),
+    user_id: str = Form(...),
+    k: int = Form(10),
+    adaptation_strength: float = Form(0.5),
+):
+    """Rank visually similar catalog items from a safely validated image upload."""
+
+    if not adaptive_recommender:
+        raise HTTPException(status_code=503, detail="System not initialized")
+    if not user_id.strip():
+        raise HTTPException(status_code=422, detail="user_id is required")
+    if not 1 <= k <= 50:
+        raise HTTPException(status_code=422, detail="k must be between 1 and 50")
+    if not 0 <= adaptation_strength <= 1:
+        raise HTTPException(
+            status_code=422, detail="adaptation_strength must be between 0 and 1"
+        )
+
+    try:
+        data = await image.read(MAX_IMAGE_BYTES + 1)
+        if len(data) > MAX_IMAGE_BYTES:
+            raise HTTPException(
+                status_code=413, detail="The uploaded image must be 5 MB or smaller."
+            )
+        query_image = decode_uploaded_image(data, image.content_type)
+        query_embedding = adaptive_recommender.encode_image(query_image)
+        results = adaptive_recommender.get_adaptive_recommendations(
+            user_id=user_id.strip(),
+            query_embedding=query_embedding,
+            k=k,
+            adaptation_strength=adaptation_strength,
+        )
+
+        for result in results:
+            result["recommendation_type"] = "image_upload"
+        return [to_recommendation_response(result) for result in results]
+    except HTTPException:
+        raise
+    except ImageValidationError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("Image-upload recommendation failed")
+        raise HTTPException(
+            status_code=500, detail="Image recommendation failed."
+        ) from exc
+    finally:
+        await image.close()
 
 
 @app.get("/priority_adaptive_recommendations", response_model=dict)
