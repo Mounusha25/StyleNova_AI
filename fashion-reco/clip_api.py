@@ -84,7 +84,7 @@ class RecommendationResponse(BaseModel):
     recommendation_type: str
 
 
-def load_catalog_from_csv(csv_path: str = "catalog.csv"):
+def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
     """Load fashion catalog from CSV file."""
     try:
         df = pd.read_csv(csv_path)
@@ -98,25 +98,15 @@ def load_catalog_from_csv(csv_path: str = "catalog.csv"):
                 if isinstance(tags_value, str):
                     tags = [tag.strip() for tag in tags_value.split(",")]
 
-            # Add category and color info for better text descriptions
-            category = "clothing"
-            title_lower = str(row["title"]).lower()
-            if any(word in title_lower for word in ["shirt", "t-shirt", "blouse"]):
-                category = "shirt"
-            elif any(word in title_lower for word in ["jean", "pant", "trouser"]):
-                category = "pants"
-            elif any(word in title_lower for word in ["shoe", "sneaker", "boot"]):
-                category = "shoes"
-            elif any(word in title_lower for word in ["dress", "gown"]):
-                category = "dress"
-            elif any(word in title_lower for word in ["jacket", "hoodie", "coat"]):
-                category = "jacket"
+            product_id = str(row.get("product_id", row.get("id", "")))
+            title = str(row.get("name", row.get("title", "")))
+            category = str(row.get("category", "clothing"))
 
             catalog.append(
                 {
-                    "id": str(row["id"]),
+                    "id": product_id,
                     "brand": str(row["brand"]),
-                    "title": str(row["title"]),
+                    "title": title,
                     "price": float(row["price"]),
                     "tags": tags,
                     "image_url": str(row["image_url"]),

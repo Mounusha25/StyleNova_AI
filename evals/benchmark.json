@@ -56,7 +56,7 @@
   {
     "id": "vuori-activewear",
     "query": "VUORI activewear",
-    "preferred_categories": ["pants", "shorts", "sports bra", "bodysuit"],
+    "preferred_categories": ["pants", "shorts", "sports bra", "bodysuit", "accessory"],
     "preferred_brands": ["VUORI"],
     "preferred_patterns": [],
     "max_price": 120,
@@ -65,7 +65,7 @@
   {
     "id": "gymshark",
     "query": "GYMSHARK workout tops and shorts",
-    "preferred_categories": ["crop top", "shorts", "midi dress"],
+    "preferred_categories": ["top", "shorts"],
     "preferred_brands": ["GYMSHARK"],
     "preferred_patterns": [],
     "max_price": 60,

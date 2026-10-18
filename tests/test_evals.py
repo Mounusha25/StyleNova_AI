@@ -24,7 +24,7 @@ class MetricTests(unittest.TestCase):
         self.assertGreater(ndcg_at_k(ranked, relevant, 4), 0.8)
 
     def test_hybrid_ranker_quality_gate(self) -> None:
-        products = load_catalog(ROOT / "fashion-reco/catalog.csv")
+        products = load_catalog(ROOT / "fashion-reco/catalog_clean.csv")
         cases = load_benchmark(ROOT / "evals/benchmark.json")
         report = evaluate_ranker(HybridRanker(products), cases, len(products), k=10)
         self.assertGreaterEqual(report["ndcg_at_10"], 0.80)

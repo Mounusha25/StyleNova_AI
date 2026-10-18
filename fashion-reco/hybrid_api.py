@@ -76,7 +76,7 @@ class RecommendationResponse(BaseModel):
     recommendation_type: str  # "quiz_based", "visual_based", "hybrid"
 
 
-def load_catalog_from_csv(csv_path: str = "catalog.csv"):
+def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
     """Load fashion catalog from CSV file."""
     try:
         df = pd.read_csv(csv_path)
@@ -90,26 +90,12 @@ def load_catalog_from_csv(csv_path: str = "catalog.csv"):
                 if isinstance(tags_value, str):
                     tags = [tag.strip() for tag in tags_value.split(",")]
 
-            # Add some sample category and color info for quiz features
-            # In real implementation, these would come from your product data
-            category = "shirt"  # Default
-            if (
-                "jean" in str(row["title"]).lower()
-                or "pant" in str(row["title"]).lower()
-            ):
-                category = "pants"
-            elif "shoe" in str(row["title"]).lower():
-                category = "shoes"
-            elif "dress" in str(row["title"]).lower():
-                category = "dress"
-            elif (
-                "hoodie" in str(row["title"]).lower()
-                or "jacket" in str(row["title"]).lower()
-            ):
-                category = "jacket"
+            product_id = str(row.get("product_id", row.get("id", "")))
+            title = str(row.get("name", row.get("title", "")))
+            category = str(row.get("category", "other"))
 
             color = "black"  # Default
-            title_lower = str(row["title"]).lower()
+            title_lower = title.lower()
             for c in ["white", "blue", "red", "gray", "black"]:
                 if c in title_lower:
                     color = c
@@ -117,9 +103,9 @@ def load_catalog_from_csv(csv_path: str = "catalog.csv"):
 
             catalog.append(
                 {
-                    "id": str(row["id"]),
+                    "id": product_id,
                     "brand": str(row["brand"]),
-                    "title": str(row["title"]),
+                    "title": title,
                     "price": float(row["price"]),
                     "tags": tags,
                     "image_url": str(row["image_url"]),

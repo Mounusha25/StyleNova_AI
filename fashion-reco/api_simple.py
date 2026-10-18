@@ -53,7 +53,7 @@ class RecommendationResponse(BaseModel):
     image_url: str
 
 
-def load_catalog_from_csv(csv_path: str = "catalog.csv"):
+def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
     """Load fashion catalog from CSV file."""
     try:
         # Load CSV using pandas
@@ -71,9 +71,9 @@ def load_catalog_from_csv(csv_path: str = "catalog.csv"):
 
             catalog.append(
                 {
-                    "id": str(row["id"]),
+                    "id": str(row.get("product_id", row.get("id", ""))),
                     "brand": str(row["brand"]),
-                    "title": str(row["title"]),
+                    "title": str(row.get("name", row.get("title", ""))),
                     "price": float(row["price"]),
                     "tags": tags,
                     "image_url": str(row["image_url"]),

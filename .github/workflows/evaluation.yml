@@ -18,6 +18,8 @@ jobs:
           cache-dependency-path: evals/requirements.txt
       - name: Install evaluation dependencies
         run: python -m pip install -r evals/requirements.txt
+      - name: Validate and normalize catalog
+        run: python -m catalog_quality.run
       - name: Run unit tests
         run: python -m unittest discover -s tests -v
       - name: Run recommendation quality gate
@@ -26,7 +28,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: recommendation-evaluation
-          path: evals/results/latest.json
+          path: |
+            evals/results/latest.json
+            catalog_quality/reports/catalog_quality.json
 
   frontend-quality:
     runs-on: ubuntu-latest

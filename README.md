@@ -132,7 +132,7 @@ class CLIPRecommender:
 ```
 
 **Key optimization decisions:**
-- Embeddings **pre-computed at catalog ingest** and cached as binary BLOBs in SQLite — inference cost paid once, not per query
+- Catalog embeddings are computed once when the Python service builds its in-memory index, rather than once per query
 - **CPU inference** for development portability; GPU swap is a single `device` change
 - **L2 normalization at encode time** so all similarity queries are pure dot-product batch ops
 
@@ -176,7 +176,7 @@ Items passed once, long ago, naturally re-enter the pool — matching real brows
 │  │  EMA weight update         │◄─┼──  Updated preference vector returned      │
 │  └────────────────────────────┘  │                                            │
 │                                  │  ┌─── Embedding Store ───────────────┐    │
-│  ┌─── Zustand Store ──────────┐  │  │  catalog.csv → CLIP ViT-B/32      │    │
+│  ┌─── Zustand Store ──────────┐  │  │  catalog_clean.csv → CLIP index   │    │
 │  │  quiz answers              │  │  │  512-dim vectors → SQLite BLOBs   │    │
 │  │  session feedback history  │  │  │  Pre-computed at catalog ingest    │    │
 │  │  current recommendations   │  │  └───────────────────────────────────┘    │
@@ -205,6 +205,34 @@ Items passed once, long ago, naturally re-enter the pool — matching real brows
 
 ---
 
+## Catalog Data Quality
+
+The source catalog is retained unchanged in `fashion-reco/catalog.csv`. A deterministic pipeline
+validates required fields and produces `catalog_clean.csv`, preserving the original category in
+`source_category` whenever it normalizes a label.
+
+| Check | Result |
+|---|---:|
+| Source/output rows | **100 / 100** |
+| Required-field, ID, price, and URL errors | **0** |
+| Title/category contradictions corrected | **47** |
+| Possible duplicate rows flagged for review | **4** across 2 groups |
+| Missing optional size values | **85** |
+| Missing optional tag values | **95** |
+
+The pipeline deliberately does not fabricate missing sizes or tags, and it flags possible
+duplicates without deleting image variants automatically. Run it with:
+
+```bash
+python -m catalog_quality.run
+```
+
+The machine-readable audit is stored at
+`catalog_quality/reports/catalog_quality.json`, and CI must pass the catalog quality gate before
+running recommendation evaluation.
+
+---
+
 ## Reproducible Offline Evaluation
 
 StyleNova includes a versioned **10-case curated relevance benchmark** over the repository's
@@ -214,14 +242,15 @@ quality, diversity, coverage, and latency.
 
 | Ranker | Precision@10 | Recall@10 | NDCG@10 | Diversity | Coverage | p50 latency |
 |---|---:|---:|---:|---:|---:|---:|
-| Catalog-order baseline | 0.050 | 0.096 | 0.083 | 0.945 | 10% | <0.01 ms |
-| TF-IDF retrieval | 0.440 | 0.950 | 0.890 | 0.886 | 57% | 0.13 ms |
-| **Hybrid profile ranker** | **0.490** | **1.000** | **0.986** | 0.856 | **72%** | 0.15 ms |
+| Catalog-order baseline | 0.050 | 0.096 | 0.083 | 0.955 | 10% | <0.01 ms |
+| TF-IDF retrieval | 0.440 | 0.950 | 0.916 | 0.898 | 58% | <1 ms |
+| **Hybrid profile ranker** | **0.480** | **0.990** | **0.984** | 0.864 | **69%** | <1 ms |
 
 Run the benchmark and its NDCG quality gate locally:
 
 ```bash
 python -m pip install -r evals/requirements.txt
+python -m catalog_quality.run
 python -m unittest discover -s tests -v
 python -m evals.run --fail-under-ndcg 0.80
 ```
@@ -313,7 +342,8 @@ stylenova-ai/
 │   ├── adaptive_recommender.py     #   Core hybrid scoring + EMA updates
 │   ├── clip_recommender.py         #   CLIP ViT-B/32 embedding engine
 │   ├── hybrid_recommender.py       #   Score combination + reranking
-│   ├── catalog.csv                 #   Fashion product catalog
+│   ├── catalog.csv                 #   Immutable source catalog
+│   ├── catalog_clean.csv           #   Validated, normalized runtime catalog
 │   ├── requirements.txt
 │   └── indexing/
 │       └── sklearn_index.py        #   scikit-learn kNN index
@@ -322,7 +352,11 @@ stylenova-ai/
 │   ├── core.py                     #   Rankers + ranking/diversity metrics
 │   ├── run.py                      #   CLI runner and NDCG quality gate
 │   └── results/latest.json         #   Reproducible benchmark artifact
-├── tests/test_evals.py             #   Metric and quality-gate tests
+├── catalog_quality/
+│   ├── pipeline.py                 #   Validation and category normalization
+│   ├── run.py                      #   Catalog quality CLI and gate
+│   └── reports/catalog_quality.json
+├── tests/                          #   Evaluation + catalog quality tests
 ├── app/
 │   ├── quiz/                       #   6-step preference quiz
 │   ├── recommendations/            #   Swipe card interface
@@ -336,7 +370,7 @@ stylenova-ai/
 │   └── validators.ts               #   Zod schemas
 └── prisma/
     ├── schema.prisma
-    └── seed.ts                     #   Catalog ingest + embedding precompute
+    └── seed.ts                     #   Application database seed data
 ```
 
 ---
@@ -357,8 +391,9 @@ stylenova-ai/
 
 | Challenge | Solution |
 |---|---|
-| **Inconsistent catalog data** — sparse tags on many items | Pydantic validation + CLIP bridges gaps text tags cannot fill |
-| **CLIP memory overhead** | Pre-computed 512-dim BLOBs; inference cost amortized at ingest |
+| **Inconsistent catalog categories** | Deterministic title-backed normalization corrected 47 contradictions while preserving source labels |
+| **Sparse optional metadata** | Quality reports surface 85 missing size values and 95 missing tag values without fabricating data |
+| **CLIP memory overhead** | Catalog embeddings are built once in memory at service startup and reused across requests |
 | **ML adaptation invisible to users** | Color preference toggle every 3rd call — live visible proof of learning |
 | **Cold start before any feedback** | 6-dimensional quiz bootstraps a preference vector from zero |
 | **Type contract drift** between TS frontend and Python backend | Zod schemas mirror Pydantic models; validated at both boundaries |

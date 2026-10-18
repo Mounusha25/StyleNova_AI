@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Evaluate StyleNova recommendation rankers.")
-    parser.add_argument("--catalog", type=Path, default=ROOT / "fashion-reco/catalog.csv")
+    parser.add_argument("--catalog", type=Path, default=ROOT / "fashion-reco/catalog_clean.csv")
     parser.add_argument("--benchmark", type=Path, default=ROOT / "evals/benchmark.json")
     parser.add_argument("--output", type=Path, default=ROOT / "evals/results/latest.json")
     parser.add_argument("--k", type=int, default=10)

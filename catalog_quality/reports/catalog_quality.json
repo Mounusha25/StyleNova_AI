@@ -1,0 +1,1703 @@
+{
+  "source": "fashion-reco/catalog.csv",
+  "output": "fashion-reco/catalog_clean.csv",
+  "rows_input": 100,
+  "rows_output": 100,
+  "quality_gate_passed": true,
+  "severity_counts": {
+    "info": 180,
+    "warning": 51
+  },
+  "issue_counts": {
+    "category_normalized": 47,
+    "missing_optional": 180,
+    "possible_duplicate": 4
+  },
+  "source_categories": {
+    "bikini set": 1,
+    "blazer": 1,
+    "blouse": 3,
+    "bodysuit": 1,
+    "coat": 5,
+    "crop top": 2,
+    "dress": 1,
+    "jacket": 1,
+    "lounge": 1,
+    "maxi dress": 8,
+    "midi dress": 3,
+    "mini dress": 30,
+    "other": 24,
+    "oversized sweater": 4,
+    "pants": 4,
+    "romper": 2,
+    "set": 1,
+    "shorts": 1,
+    "skirt": 1,
+    "sports bra": 1,
+    "sweater": 2,
+    "swimsuit": 1,
+    "tube top": 2
+  },
+  "normalized_categories": {
+    "accessory": 1,
+    "bag": 3,
+    "bikini set": 1,
+    "blazer": 1,
+    "blouse": 3,
+    "bodysuit": 1,
+    "coat": 4,
+    "dress": 1,
+    "footwear": 1,
+    "jacket": 1,
+    "maxi dress": 15,
+    "mini dress": 22,
+    "other": 4,
+    "pants": 9,
+    "romper": 2,
+    "shorts": 6,
+    "skirt": 4,
+    "sports bra": 2,
+    "sweater": 4,
+    "swimsuit": 2,
+    "top": 13
+  },
+  "possible_duplicate_groups": [
+    {
+      "name": "boxy corduroy shirt",
+      "brand": "shpresa x na-kd",
+      "price": "59.95",
+      "product_ids": [
+        "3352",
+        "3246"
+      ]
+    },
+    {
+      "name": "oversized long trenchcoat",
+      "brand": "josefine hj x na-kd",
+      "price": "149.95",
+      "product_ids": [
+        "3326",
+        "3206"
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "470",
+      "field": "category",
+      "message": "'maxi dress' -> 'sweater' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "575",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "430",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "1187",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "1292",
+      "field": "category",
+      "message": "'lounge' -> 'shorts' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "1292",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "1282",
+      "field": "category",
+      "message": "'other' -> 'skirt' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "1282",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3029",
+      "field": "category",
+      "message": "'oversized sweater' -> 'sweater' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3029",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "2551",
+      "field": "category",
+      "message": "'tube top' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "2551",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "2786",
+      "field": "category",
+      "message": "'oversized sweater' -> 'pants' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "2786",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3262",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3262",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3285",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3285",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3198",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3198",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3528",
+      "field": "category",
+      "message": "'mini dress' -> 'bag' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3528",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3528",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3297",
+      "field": "category",
+      "message": "'coat' -> 'pants' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3297",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3297",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3343",
+      "field": "category",
+      "message": "'coat' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3343",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3343",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3326",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3326",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3206",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3206",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3217",
+      "field": "category",
+      "message": "'other' -> 'footwear' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3217",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3217",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3305",
+      "field": "category",
+      "message": "'other' -> 'bag' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3305",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3305",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3682",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3682",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3241",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3241",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3352",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3352",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3352",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3246",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3246",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3246",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3461",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3461",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3299",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3299",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3497",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3497",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3277",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3277",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3277",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3335",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3335",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3576",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3576",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3576",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3295",
+      "field": "category",
+      "message": "'midi dress' -> 'skirt' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3295",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3295",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3600",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3600",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3303",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3303",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3395",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3395",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3572",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3572",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3455",
+      "field": "category",
+      "message": "'midi dress' -> 'skirt' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3455",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3455",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3421",
+      "field": "category",
+      "message": "'other' -> 'bag' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3421",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3421",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3511",
+      "field": "category",
+      "message": "'tube top' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3511",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3511",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3457",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3457",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3457",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3463",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3463",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3581",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3581",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3659",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3659",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3533",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3533",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3555",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3555",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3544",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3544",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3544",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3621",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3621",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3861",
+      "field": "category",
+      "message": "'midi dress' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3861",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3731",
+      "field": "category",
+      "message": "'sports bra' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3731",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "3713",
+      "field": "category",
+      "message": "'other' -> 'shorts' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3713",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4401",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4401",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4351",
+      "field": "category",
+      "message": "'crop top' -> 'shorts' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4351",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4351",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4115",
+      "field": "category",
+      "message": "'other' -> 'sports bra' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4115",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4115",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4799",
+      "field": "category",
+      "message": "'set' -> 'bikini set' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4799",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4799",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4826",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4826",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4828",
+      "field": "category",
+      "message": "'bikini set' -> 'swimsuit' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4828",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4828",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6141",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6141",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "5741",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5741",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5741",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5298",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5298",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "6785",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6785",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6785",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "6324",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6324",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6324",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5283",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5283",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6685",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6685",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6809",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6809",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5441",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5441",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5309",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5309",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5063",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5063",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6468",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6468",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6814",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6814",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6772",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6772",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5166",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5166",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5373",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5373",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6651",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6651",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5390",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5390",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "5450",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5450",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5450",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "6639",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6639",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6639",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "6870",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6870",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6870",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5890",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5890",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6574",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6574",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6384",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6384",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6477",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6477",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "7449",
+      "field": "category",
+      "message": "'other' -> 'pants' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7449",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7449",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "7434",
+      "field": "category",
+      "message": "'other' -> 'shorts' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7434",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7434",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "7145",
+      "field": "category",
+      "message": "'other' -> 'accessory' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7145",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7145",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "7352",
+      "field": "category",
+      "message": "'other' -> 'pants' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7352",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7352",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6853",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6853",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "1622",
+      "field": "category",
+      "message": "'oversized sweater' -> 'shorts' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "1622",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "5474",
+      "field": "category",
+      "message": "'mini dress' -> 'maxi dress' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5474",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5474",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5249",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5249",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4223",
+      "field": "category",
+      "message": "'other' -> 'pants' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4223",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4223",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "3141",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5714",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5714",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5101",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5101",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "2170",
+      "field": "category",
+      "message": "'oversized sweater' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "2170",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "2209",
+      "field": "category",
+      "message": "'other' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "2209",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7240",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "7240",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "4690",
+      "field": "category",
+      "message": "'crop top' -> 'coat' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4690",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "4690",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "569",
+      "field": "category",
+      "message": "'maxi dress' -> 'top' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "569",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6696",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6696",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "1211",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5535",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "5535",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "category_normalized",
+      "product_id": "6984",
+      "field": "category",
+      "message": "'other' -> 'sports bra' based on product title"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6984",
+      "field": "available_sizes",
+      "message": "No size metadata"
+    },
+    {
+      "severity": "info",
+      "code": "missing_optional",
+      "product_id": "6984",
+      "field": "tags",
+      "message": "No tag metadata"
+    },
+    {
+      "severity": "warning",
+      "code": "possible_duplicate",
+      "product_id": "3352",
+      "field": "name",
+      "message": "Same normalized name, brand, and price as another catalog row"
+    },
+    {
+      "severity": "warning",
+      "code": "possible_duplicate",
+      "product_id": "3246",
+      "field": "name",
+      "message": "Same normalized name, brand, and price as another catalog row"
+    },
+    {
+      "severity": "warning",
+      "code": "possible_duplicate",
+      "product_id": "3326",
+      "field": "name",
+      "message": "Same normalized name, brand, and price as another catalog row"
+    },
+    {
+      "severity": "warning",
+      "code": "possible_duplicate",
+      "product_id": "3206",
+      "field": "name",
+      "message": "Same normalized name, brand, and price as another catalog row"
+    }
+  ]
+}

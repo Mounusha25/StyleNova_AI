@@ -114,7 +114,7 @@ class RecommendationResponse(BaseModel):
     is_personalized: bool = False
 
 
-def load_catalog_from_csv(csv_path: str = "catalog.csv"):
+def load_catalog_from_csv(csv_path: str = "catalog_clean.csv"):
     """Load fashion catalog from CSV file."""
     try:
         # Try filtered catalog first, fallback to original
@@ -146,19 +146,7 @@ def load_catalog_from_csv(csv_path: str = "catalog.csv"):
             price = float(row.get("price", 0))
             image_url = str(row.get("image_url", ""))
 
-            # Add category and color info for better text descriptions
-            category = "clothing"
-            title_lower = title.lower()
-            if any(word in title_lower for word in ["shirt", "t-shirt", "blouse"]):
-                category = "shirt"
-            elif any(word in title_lower for word in ["jean", "pant", "trouser"]):
-                category = "pants"
-            elif any(word in title_lower for word in ["shoe", "sneaker", "boot"]):
-                category = "shoes"
-            elif any(word in title_lower for word in ["dress", "gown"]):
-                category = "dress"
-            elif any(word in title_lower for word in ["jacket", "hoodie", "coat"]):
-                category = "jacket"
+            category = str(row.get("category", "clothing"))
 
             catalog.append(
                 {
