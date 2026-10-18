@@ -50,7 +50,7 @@ export function Testimonials() {
             What Our Style Seekers Say
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Join thousands who've discovered their perfect style with our personalized recommendations.
+            Join thousands who have discovered their perfect style with our personalized recommendations.
           </p>
         </motion.div>
 
@@ -71,7 +71,7 @@ export function Testimonials() {
                     ))}
                   </div>
                   <p className="text-gray-700 text-sm leading-relaxed mb-6">
-                    "{testimonial.text}"
+                    &ldquo;{testimonial.text}&rdquo;
                   </p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">

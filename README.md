@@ -12,7 +12,7 @@
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org)
 [![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 
-**A production-grade hybrid recommender that fuses OpenAI CLIP vision-language embeddings with adaptive collaborative filtering — deployed end-to-end with a real-time swipe feedback loop.**
+**An evaluation-backed fashion recommendation prototype combining CLIP-oriented retrieval, explicit preference signals, and a real-time swipe feedback loop.**
 
 </div>
 
@@ -205,28 +205,30 @@ Items passed once, long ago, naturally re-enter the pool — matching real brows
 
 ---
 
-## Performance Results
+## Reproducible Offline Evaluation
 
-### Recommendation Quality
-| Metric | Score | Notes |
-|---|---|---|
-| Precision@10 | **0.73** | 73% of top-10 recommendations rated relevant |
-| Diversity Score | **0.68** | Intra-list diversity — avoids redundant results |
-| Catalog Coverage | **89%** | Items surfaced to ≥1 user — avoids popularity bias |
+StyleNova includes a versioned **10-case curated relevance benchmark** over the repository's
+**100-item catalog**. Each case declares its query, explicit profile constraints, and relevant
+product IDs. The runner compares three strategies using the same labels and reports ranking
+quality, diversity, coverage, and latency.
 
-### User Engagement
-| Metric | Value |
-|---|---|
-| Quiz Completion Rate | **84%** |
-| Avg. Session Duration | **3.2 min** |
-| Swipe-through Rate | **67%** swipe ≥10 items |
+| Ranker | Precision@10 | Recall@10 | NDCG@10 | Diversity | Coverage | p50 latency |
+|---|---:|---:|---:|---:|---:|---:|
+| Catalog-order baseline | 0.050 | 0.096 | 0.083 | 0.945 | 10% | <0.01 ms |
+| TF-IDF retrieval | 0.440 | 0.950 | 0.890 | 0.886 | 57% | 0.13 ms |
+| **Hybrid profile ranker** | **0.490** | **1.000** | **0.986** | 0.856 | **72%** | 0.15 ms |
 
-### System Performance
-| Metric | Value |
-|---|---|
-| API Response Time | **< 200 ms** (cached embeddings) |
-| Frontend Bundle | **2.3 MB** gzipped |
-| DB Query Time | **< 50 ms** |
+Run the benchmark and its NDCG quality gate locally:
+
+```bash
+python -m pip install -r evals/requirements.txt
+python -m unittest discover -s tests -v
+python -m evals.run --fail-under-ndcg 0.80
+```
+
+The full machine-readable report is written to `evals/results/latest.json`. These numbers are
+**offline results on a small, curated catalog benchmark**; they are not production traffic,
+A/B-test, conversion, or real-user engagement metrics.
 
 ---
 
@@ -256,33 +258,10 @@ Items passed once, long ago, naturally re-enter the pool — matching real brows
 
 ## Database Schema
 
-```sql
-CREATE TABLE products (
-    id             TEXT PRIMARY KEY,
-    brand          TEXT,
-    category       TEXT,
-    colors         JSON,
-    price          REAL,
-    tags           JSON,
-    image_url      TEXT,
-    clip_embedding BLOB    -- 512-dim float32 vector, pre-computed via ViT-B/32
-);
-
-CREATE TABLE feedback (
-    id         INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id    TEXT,
-    product_id TEXT,
-    action     TEXT,       -- 'like' | 'pass'
-    score      REAL,       -- recommendation score at time of interaction
-    timestamp  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE users (
-    id          TEXT PRIMARY KEY,
-    preferences JSON,      -- EMA-updated preference vector per session
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
+The current Prisma/SQLite application schema persists four entities: `User`, `Quiz`,
+`Recommendation`, and `Feedback`. Product metadata and model embeddings are currently owned by
+the Python recommendation service and CSV catalog rather than Prisma. See
+[`prisma/schema.prisma`](prisma/schema.prisma) for the source-of-truth schema.
 
 ---
 
@@ -338,6 +317,12 @@ stylenova-ai/
 │   ├── requirements.txt
 │   └── indexing/
 │       └── sklearn_index.py        #   scikit-learn kNN index
+├── evals/
+│   ├── benchmark.json              #   Explicit offline relevance labels
+│   ├── core.py                     #   Rankers + ranking/diversity metrics
+│   ├── run.py                      #   CLI runner and NDCG quality gate
+│   └── results/latest.json         #   Reproducible benchmark artifact
+├── tests/test_evals.py             #   Metric and quality-gate tests
 ├── app/
 │   ├── quiz/                       #   6-step preference quiz
 │   ├── recommendations/            #   Swipe card interface
@@ -362,7 +347,7 @@ stylenova-ai/
 |---|---|---|
 | CLIP ViT-B/32 over text-only TF-IDF | ResNet, EfficientNet, pure TF-IDF | Cross-modal: text queries → visual results without image uploads |
 | EMA over gradient descent updates | SGD on preference vector | No labels needed; works from binary like/pass signals only |
-| Pre-computed embeddings in SQLite | On-the-fly CLIP inference at query time | < 200ms response vs ~2s per query cold inference |
+| Pre-computed in-memory catalog embeddings | On-the-fly CLIP inference for every query | Amortizes catalog encoding across online retrieval requests |
 | ε-greedy over Thompson Sampling | UCB, full Bayesian bandits | Simpler, interpretable, sufficient for session-length horizons |
 | Soft exclusion over hard blacklist | Remove all passed items permanently | Preserves catalog diversity; matches real browsing behavior |
 
@@ -381,15 +366,14 @@ stylenova-ai/
 
 ---
 
-## Advanced Product Engineering Decisions
+## Evaluation Engineering Decisions
 
 | Decision | Constraint | Result |
 |---|---|---|
-| **Optimistic swipe updates** | Swipe feedback needs to feel instant even though reranking takes real compute | Zustand removes the swiped card immediately while FastAPI recomputes preference weights asynchronously, with rollback on failure, cutting perceived interaction latency from approximately 450 ms to under 100 ms |
-| **Indexed preference history** | EMA updates need fast recent-history lookups as feedback grows | SwipeEvent, PreferenceVector, and QuizResponse are modeled as indexed Prisma tables, keeping recent-swipe queries under approximately 35 ms for 1,000 events per user |
-| **Velocity-based swipe gestures** | Fashion discovery should feel physical, not like button clicking | Framer Motion fling detection commits high-velocity swipes even below the distance threshold, tuned against roughly 75 manual test swipes for natural gesture speed |
-| **Recommendation explanations** | A similarity score alone does not tell users why an item was recommended | GPT-4o-mini generates a short natural-language explanation from recent swipe patterns and item attributes, adding under approximately 250 ms latency per explanation |
-| **LLM-guided preference correction** | Swiping alone is slow when the recommendation cluster is clearly wrong | GPT-4o-mini function calling exposes `adjust_preference_weights`, letting feedback like "less formal, brighter colors" update weighting directly and reducing correction effort from roughly 12 swipes to 4 |
+| **Explicit relevance labels** | Ranking metrics are meaningless without ground truth | Every benchmark case versions its relevant product IDs beside the query and profile |
+| **Multiple baselines** | A standalone metric cannot show whether personalization helps | Catalog order, TF-IDF, and hybrid profile ranking are evaluated under identical conditions |
+| **Quality gate** | Recommender changes can silently degrade result ordering | CI fails if the hybrid ranker's NDCG@10 falls below 0.80 |
+| **Transparent scope** | Curated relevance cases do not represent production behavior | Reports identify the benchmark as offline and avoid unsupported engagement claims |
 
 ---
 
@@ -401,7 +385,8 @@ stylenova-ai/
 - [ ] **Outfit completion** — multi-item combinatorial recommendation with pairwise compatibility scoring
 - [ ] **GPU model serving** — TorchServe / Triton Inference Server for production throughput
 - [ ] **A/B testing framework** — compare recommendation strategies across user cohorts
-- [ ] **Online evaluation** — real-time Precision@K and NDCG tracking per session
+- [x] **Offline evaluation** — versioned Precision@10, Recall@10, NDCG@10, diversity, coverage, and latency benchmark
+- [ ] **Online evaluation** — cohort experiments using consented interaction data and business KPIs
 
 ---
 

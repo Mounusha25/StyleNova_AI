@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-// import { Input } from '@/components/ui/input'
-import { Input } from '@/components/Input' // Update this path to the correct location of your Input component
+import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Search, Eye, Calendar, User } from 'lucide-react'
 import { QuizAnswer } from '@/lib/validators'

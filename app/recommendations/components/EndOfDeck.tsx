@@ -41,7 +41,7 @@ export function EndOfDeck({
             </motion.div>
 
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              You've seen it all! 🎉
+              You have seen it all! 🎉
             </h1>
 
             <p className="text-gray-600 mb-6">

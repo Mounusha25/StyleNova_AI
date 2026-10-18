@@ -18,11 +18,18 @@ interface QuestionCardProps {
 }
 
 export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
-  const [selectedValue, setSelectedValue] = useState<any>(value?.value)
+  const [selectedValue, setSelectedValue] = useState<QuizAnswer['value'] | undefined>(value?.value)
 
   useEffect(() => {
     setSelectedValue(value?.value)
   }, [value])
+
+  const singleValue = typeof selectedValue === 'string' ? selectedValue : ''
+  const scaleValue = typeof selectedValue === 'number' ? selectedValue : (question.min ?? 0)
+  const sizeValue: Extract<QuizAnswer, { type: 'size' }>['value'] =
+    typeof selectedValue === 'object' && selectedValue !== null && !Array.isArray(selectedValue)
+      ? selectedValue
+      : {}
 
   const handleSingleChoice = (newValue: string) => {
     setSelectedValue(newValue)
@@ -62,7 +69,10 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
   }
 
   const handleSizeChange = (sizeType: string, size: string) => {
-    const currentSizes = typeof selectedValue === 'object' && selectedValue !== null ? selectedValue : {}
+    const currentSizes: Extract<QuizAnswer, { type: 'size' }>['value'] =
+      typeof selectedValue === 'object' && selectedValue !== null && !Array.isArray(selectedValue)
+        ? selectedValue
+        : {}
     const newSizes = { ...currentSizes, [sizeType]: size }
     
     setSelectedValue(newSizes)
@@ -86,7 +96,7 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
       <CardContent>
         {question.type === 'single' && question.options && (
           <RadioGroup 
-            value={selectedValue || ''} 
+            value={singleValue}
             onValueChange={handleSingleChoice}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -129,7 +139,7 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
           <div className="space-y-4">
             <div className="px-2">
               <Slider
-                value={[selectedValue || question.min || 0]}
+                value={[scaleValue]}
                 onValueChange={handleScaleChange}
                 min={question.min || 0}
                 max={question.max || 100}
@@ -140,7 +150,7 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
             <div className="flex justify-between text-sm text-gray-500">
               <span>${question.min || 0}</span>
               <span className="font-semibold text-lg text-gray-900">
-                ${selectedValue || question.min || 0}
+                ${scaleValue}
               </span>
               <span>${question.max || 100}</span>
             </div>
@@ -157,7 +167,7 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
                     <Button
                       key={size}
                       variant={
-                        selectedValue?.[sizeType] === size ? "default" : "outline"
+                        sizeValue[sizeType as keyof typeof sizeValue] === size ? "default" : "outline"
                       }
                       size="sm"
                       onClick={() => handleSizeChange(sizeType, size)}

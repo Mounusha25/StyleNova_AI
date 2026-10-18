@@ -3,6 +3,8 @@
  * Backend runs on http://localhost:8004
  */
 
+import type { Product, QuizAnswer } from './validators'
+
 // Types matching the backend API
 export interface QuizFeatures {
   size?: string
@@ -34,7 +36,7 @@ export interface RecommendationResponse {
   base_score?: number
   image_url: string
   recommendation_type: string
-  user_feedback?: any
+  user_feedback?: unknown
   is_personalized: boolean
 }
 
@@ -51,14 +53,14 @@ export interface UserStats {
   dislikes: number
   personalization_score: number
   last_feedback?: string
-  feedback_history: any[]
+  feedback_history: unknown[]
 }
 
 // API Configuration
 const FASHION_API_BASE_URL = 'http://localhost:8004'
 
 class FashionAPIError extends Error {
-  constructor(message: string, public status?: number, public response?: any) {
+  constructor(message: string, public status?: number, public response?: unknown) {
     super(message)
     this.name = 'FashionAPIError'
   }
@@ -298,7 +300,7 @@ export async function resetUserProfile(userId: string): Promise<{ status: string
 /**
  * Helper function to convert quiz answers to QuizFeatures format
  */
-export function convertQuizAnswersToFeatures(answers: any[]): QuizFeatures {
+export function convertQuizAnswersToFeatures(answers: QuizAnswer[]): QuizFeatures {
   const features: QuizFeatures = {
     preferred_categories: [],
     preferred_colors: [],
@@ -371,7 +373,16 @@ export async function getAdaptiveRecommendations(
 /**
  * Helper function to convert backend recommendation to frontend Product format
  */
-export function convertRecommendationToProduct(rec: RecommendationResponse): any {
+export interface FrontendRecommendation extends Product {
+  score: number
+  baseScore?: number
+  isPersonalized: boolean
+  recommendationType: string
+  userFeedback?: unknown
+  rank: number
+}
+
+export function convertRecommendationToProduct(rec: RecommendationResponse): FrontendRecommendation {
   return {
     id: rec.id,
     title: rec.title,
@@ -397,10 +408,10 @@ export function convertRecommendationToProduct(rec: RecommendationResponse): any
  */
 export async function fetchRecommendationsForUser(
   userId: string,
-  quizAnswers: any[],
+  quizAnswers: QuizAnswer[],
   adaptationStrength: number = 0.6,
   count: number = 20
-): Promise<any[]> {
+): Promise<FrontendRecommendation[]> {
   try {
     // Convert quiz answers to backend format
     const quizFeatures = convertQuizAnswersToFeatures(quizAnswers)

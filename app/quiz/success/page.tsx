@@ -1,13 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { motion } from 'framer-motion'
 import { CheckCircle, Sparkles, ArrowRight, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react'
-import { QuizAnswer } from '@/lib/validators'
+import { Product, QuizAnswer } from '@/lib/validators'
 import { generateRecommendations } from '@/lib/scoring'
 import { useRecommendationStore, useUserStore } from '@/lib/store'
 import { fetchRecommendationsForUser, checkFashionAPIHealth } from '@/lib/fashion-api'
@@ -29,6 +29,14 @@ interface QuizData {
 }
 
 export default function QuizSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading quiz results...</div>}>
+      <QuizSuccessContent />
+    </Suspense>
+  )
+}
+
+function QuizSuccessContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const quizId = searchParams.get('quizId')
@@ -77,7 +85,7 @@ export default function QuizSuccessPage() {
     setRecommendationError(null)
     
     try {
-      let recommendations = []
+      let recommendations: Product[] = []
       
       if (useBackendAPI) {
         // Try to use the adaptive backend API first
@@ -217,7 +225,7 @@ export default function QuizSuccessPage() {
               🎉 Quiz Complete!
             </h1>
             <p className="text-lg text-gray-600 mb-6">
-              Amazing! We've captured your style preferences and are ready to show you 
+              Amazing! We have captured your style preferences and are ready to show you
               personalized recommendations {useBackendAPI ? 'from our AI-powered adaptive system' : 'from our curated collection'}.
             </p>
             
@@ -287,7 +295,7 @@ export default function QuizSuccessPage() {
                 Ready to see your personalized recommendations?
               </h3>
               <p className="text-gray-600">
-                Based on your {quizData.quiz.answers.length} answers, we'll show you clothes 
+                Based on your {quizData.quiz.answers.length} answers, we will show you clothes
                 that match your style, budget, and preferences.
               </p>
               

@@ -42,3 +42,8 @@ next-env.d.ts
 
 # python virtual environment
 fashion_venv/
+__pycache__/
+*.py[cod]
+
+# local duplicate/reference checkout
+/StyleNova-AI/

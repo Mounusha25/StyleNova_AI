@@ -6,9 +6,17 @@ import { useRecommendationStore } from '@/lib/store'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
+interface CatalogDebugInfo {
+  totalProducts: number
+  firstProduct: (typeof catalogData)[number] | undefined
+  sampleIds: string[]
+  brands: string[]
+  priceRange: { min: number; max: number }
+}
+
 export default function CatalogDebugPage() {
-  const [debugInfo, setDebugInfo] = useState<any>(null)
-  const { reset, setRecommendations } = useRecommendationStore()
+  const [debugInfo, setDebugInfo] = useState<CatalogDebugInfo | null>(null)
+  const { reset } = useRecommendationStore()
   
   useEffect(() => {
     // Force fresh catalog data

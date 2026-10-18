@@ -25,7 +25,7 @@ function clearAppStorage() {
 
 // For browser console use
 if (typeof window !== 'undefined') {
-  (window as any).clearAppStorage = clearAppStorage;
+  (window as Window & { clearAppStorage?: () => void }).clearAppStorage = clearAppStorage;
   console.log('💡 To reset app data, run: clearAppStorage()');
 }
 

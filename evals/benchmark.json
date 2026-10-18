@@ -1,0 +1,92 @@
+[
+  {
+    "id": "denim",
+    "query": "denim fashion",
+    "preferred_categories": [],
+    "preferred_brands": [],
+    "preferred_patterns": ["denim"],
+    "max_price": null,
+    "relevant_product_ids": ["3262", "3297", "3241", "3457", "1622"]
+  },
+  {
+    "id": "suede",
+    "query": "suede accessories and clothing",
+    "preferred_categories": [],
+    "preferred_brands": [],
+    "preferred_patterns": ["suede"],
+    "max_price": null,
+    "relevant_product_ids": ["3528", "3217", "3305", "3395", "3455"]
+  },
+  {
+    "id": "halter",
+    "query": "halter dress",
+    "preferred_categories": ["mini dress", "maxi dress"],
+    "preferred_brands": [],
+    "preferred_patterns": ["halter"],
+    "max_price": 100,
+    "relevant_product_ids": ["5741", "5450", "5474", "5714"]
+  },
+  {
+    "id": "strapless",
+    "query": "strapless outfit",
+    "preferred_categories": ["mini dress", "romper"],
+    "preferred_brands": [],
+    "preferred_patterns": ["strapless"],
+    "max_price": 80,
+    "relevant_product_ids": ["5283", "6870", "6853", "6696"]
+  },
+  {
+    "id": "knit",
+    "query": "knit sweater and skirt",
+    "preferred_categories": ["sweater", "maxi dress", "midi dress"],
+    "preferred_brands": [],
+    "preferred_patterns": ["knit"],
+    "max_price": 100,
+    "relevant_product_ids": ["470", "3285", "3295"]
+  },
+  {
+    "id": "edikted-budget",
+    "query": "affordable EDIKTED clothing",
+    "preferred_categories": [],
+    "preferred_brands": ["EDIKTED"],
+    "preferred_patterns": [],
+    "max_price": 40,
+    "relevant_product_ids": ["3029", "2551", "2786", "1622", "3141", "2170", "2209"]
+  },
+  {
+    "id": "vuori-activewear",
+    "query": "VUORI activewear",
+    "preferred_categories": ["pants", "shorts", "sports bra", "bodysuit"],
+    "preferred_brands": ["VUORI"],
+    "preferred_patterns": [],
+    "max_price": 120,
+    "relevant_product_ids": ["7449", "7434", "7352", "7240", "6984"]
+  },
+  {
+    "id": "gymshark",
+    "query": "GYMSHARK workout tops and shorts",
+    "preferred_categories": ["crop top", "shorts", "midi dress"],
+    "preferred_brands": ["GYMSHARK"],
+    "preferred_patterns": [],
+    "max_price": 60,
+    "relevant_product_ids": ["3861", "3731", "3713"]
+  },
+  {
+    "id": "cupshe-swim",
+    "query": "CUPSHE swimsuit bikini",
+    "preferred_categories": ["swimsuit", "bikini set"],
+    "preferred_brands": ["CUPSHE"],
+    "preferred_patterns": [],
+    "max_price": 50,
+    "relevant_product_ids": ["4799", "4826", "4828"]
+  },
+  {
+    "id": "budget-dresses",
+    "query": "affordable mini dress under 30",
+    "preferred_categories": ["mini dress"],
+    "preferred_brands": [],
+    "preferred_patterns": [],
+    "max_price": 30,
+    "relevant_product_ids": ["6141", "6324", "6809", "6814", "6772", "6651", "6574", "6384", "6853", "5249"]
+  }
+]
