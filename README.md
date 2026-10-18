@@ -321,6 +321,9 @@ cd stylenova-ai
 
 npm install
 
+# Configure local SQLite and the recommendation API URL
+cp .env.example .env.local
+
 # Push Prisma schema and seed the product catalog
 npm run db:push
 npm run db:seed
